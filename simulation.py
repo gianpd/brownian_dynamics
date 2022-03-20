@@ -51,7 +51,7 @@ def update_lines(num, walks, lines):
 
 def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None):
     # Data: simulation of a 3D brownian dynamics of N particles
-    rs, ps = main(dt, r, p, gamma, box, T, n, num_steps, f)
+    rs, _ = main(dt, r, p, gamma, box, T, n, num_steps, f)
     rs = np.asarray(rs).reshape((n, num_steps, 3))
     
     # Attaching 3D axis to the figure
@@ -68,10 +68,10 @@ def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None):
     
     # Creating the Animation object
     anim = animation.FuncAnimation(
-        fig, update_lines, num_steps, fargs=(rs, lines), interval=10)
+        fig, update_lines, num_steps, fargs=(rs, lines), interval=120)
     
     writergif = animation.PillowWriter(fps=30)
-    anim.save(f'{fname}_{gamma}.gif',writer=writergif)
+    anim.save(f'{fname}_G{gamma}_T{T}.gif', writer=writergif, dpi=150)
     plt.close()
 
 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Brownian Dynamics MD simulation.')
     parser.add_argument(
         '--dt', help='time step integration (default value = 0.005)', 
-        required=False, type=float, action='store', default=0.001
+        required=False, type=float, action='store', default=0.005
     )
     parser.add_argument(
         '--IC', required=False, type=float, action='store',
@@ -91,7 +91,7 @@ if __name__ == '__main__':
         help='Box dimensions (default=1.0)'
     )
     parser.add_argument(
-        '--num_steps', action='store', required=False, default=1000,
+        '--num_steps', action='store', required=False, type=int, default=1000,
         help='# of stemps (default value = 1000)'
     )
     parser.add_argument(
