@@ -11,7 +11,7 @@ def kick_step_propagator(t, p, f=None):
     if f:
         return p + t * f
     else:
-        return p 
+        return p
 
 def drift_step_propagator(t, r, p, box):
     r = r + t * (p / box)
@@ -49,7 +49,7 @@ def update_lines(num, walks, lines):
         line.set_3d_properties(walk[:num, 2])
     return lines
 
-def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None):
+def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2):
     # Data: simulation of a 3D brownian dynamics of N particles
     rs, _ = main(dt, r, p, gamma, box, T, n, num_steps, f)
     rs = np.asarray(rs).reshape((n, num_steps, 3))
@@ -59,7 +59,7 @@ def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None):
     ax1 = fig.add_subplot(projection="3d")
     
     # Create lines initially without data
-    lines = [ax1.plot([], [], [])[0] for _ in rs]
+    lines = [ax1.plot([], [], [], lw=lw)[0] for _ in rs]
     
     # Setting the axes properties
     ax1.set(xlim3d=(-1, 1), xlabel='X')
@@ -71,7 +71,7 @@ def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None):
         fig, update_lines, num_steps, fargs=(rs, lines), interval=120)
     
     writergif = animation.PillowWriter(fps=30)
-    anim.save(f'{fname}_G{gamma}_T{T}.gif', writer=writergif, dpi=150)
+    anim.save(f'{fname}_G{gamma}_T{T}_N{n}.gif', writer=writergif, dpi=150)
     plt.close()
 
 
@@ -110,6 +110,10 @@ if __name__ == '__main__':
         '--fname', action='store', required=True, type=str,
         help='file name of the final gif simulation (without extensions).'
     )
+    parser.add_argument(
+        '--lw', action='store', required=False, type=float,
+        help='Line Width dimension.'
+    )
 
 
     args = parser.parse_args()
@@ -122,6 +126,7 @@ if __name__ == '__main__':
     N = args.N
     num_steps = args.num_steps
     fname = args.fname
+    lw = args.lw
     
-    save_gif(fname, dt, r, p, gamma, box, T, N, num_steps)
+    save_gif(fname, dt, r, p, gamma, box, T, N, num_steps, lw=lw)
 
