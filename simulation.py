@@ -32,7 +32,9 @@ def random_step_propagator(t, p, gamma, T, n, random=True):
         p = p * np.exp(-x) + c * np.sqrt(T) * np.random.randn(n, 3)
         return p
     else:
-        # just friction
+        # the system will not reach any equilibrium state because 
+        # at long-time its velocity will be zero, while the equipartition theorem requires:
+        # <v**2> \sim K_BT. The random force allows to reach the equilibrium state (fluctuation-dissipation theorem)
         p = p * np.exp(-x)
         return p
 
