@@ -1,13 +1,13 @@
 import argparse
 
 import numpy as np
-np.random.seed(123)
+np.random.seed(12345)
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 
 def kick_step_propagator(t, p, f=None):
-    """t is the time step (usually dt/2); p is the momentum which must be propagated """
+    """t is the time step (usually dt/2); p is the momentum which must be propagated, f the external force"""
     if f:
         return p + t * f
     else:
@@ -49,7 +49,7 @@ def update_lines(num, walks, lines):
         line.set_3d_properties(walk[:num, 2])
     return lines
 
-def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2):
+def save_gif(dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2):
     # Data: simulation of a 3D brownian dynamics of N particles
     rs, _ = main(dt, r, p, gamma, box, T, n, num_steps, f)
     rs = np.asarray(rs).reshape((n, num_steps, 3))
@@ -71,7 +71,8 @@ def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2):
         fig, update_lines, num_steps, fargs=(rs, lines), interval=120)
     
     writergif = animation.PillowWriter(fps=30)
-    anim.save(f'{fname}_G{gamma}_T{T}_N{n}.gif', writer=writergif, dpi=150)
+    f = f if f else 0.0
+    anim.save(f'sim_G{gamma}_T{T}_N{n}_F{f}.gif', writer=writergif, dpi=150)
     plt.close()
 
 
@@ -106,13 +107,17 @@ if __name__ == '__main__':
         '--N', action='store', required=False, default=1, type=int,
         help='Number of particles (defalt value = 1)'
     )
-    parser.add_argument(
-        '--fname', action='store', required=True, type=str,
-        help='file name of the final gif simulation (without extensions).'
-    )
+    # parser.add_argument(
+    #     '--fname', action='store', required=True, type=str,
+    #     help='file name of the final gif simulation (without extensions).'
+    # )
     parser.add_argument(
         '--lw', action='store', required=False, type=float,
         help='Line Width dimension.'
+    )
+    parser.add_argument(
+        '--F', action='store', required=False, type=float,
+        help='External Force magnitude.'
     )
 
 
@@ -125,8 +130,9 @@ if __name__ == '__main__':
     T = args.T
     N = args.N
     num_steps = args.num_steps
-    fname = args.fname
+    # fname = args.fname
     lw = args.lw
+    F = args.F
     
-    save_gif(fname, dt, r, p, gamma, box, T, N, num_steps, lw=lw)
+    save_gif(dt, r, p, gamma, box, T, N, num_steps, f=F, lw=lw)
 
