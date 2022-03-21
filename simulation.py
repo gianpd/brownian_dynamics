@@ -91,7 +91,7 @@ if __name__ == '__main__':
         required=False, type=float, action='store', default=0.005
     )
     parser.add_argument(
-        '--IC', required=False, type=float, action='store',
+        '--IC', required=False, nargs=2, action='store', type=float,
         help='initial position and velocity conditions, default=(0,0)',
         default=(0.0, 0.0)
     )
