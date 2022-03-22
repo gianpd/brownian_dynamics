@@ -18,5 +18,6 @@ where:
 
 <br>
 
-<img src="https://render.githubusercontent.com/render/math?math=p\left(t + \delta t\right)} = \exp(-\gamma\delta t) p\left(t\right)} + \sqrt{1-\exp(-2\gamma\delta t)}\sqrt{m k_B T} G">
+<img src="https://render.githubusercontent.com/render/math?math=
+          \vec{p} \left(t + \delta t \right)} = \exp(-\gamma \delta t) \vec{p} \left(t\right)} + \sqrt{1-\exp(-2\gamma\delta t)}\sqrt{m k_B T} \vec{G}">
 
