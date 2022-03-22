@@ -4,9 +4,7 @@
 ![Simulation](./sim_G0.5_T1.0_N10_F1.0_dt0.005.gif)
 
 
-```math
-\bold{\dot{p}} = -\gamma\bold{p} + \sigma \bold{\dot{w}} 
-```
+<img src="https://render.githubusercontent.com/render/math?math=\bold{\dot{p}} = -\gamma\bold{p} + \sigma \bold{\dot{w}} ">
 
 where:
 <br>
