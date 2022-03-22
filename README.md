@@ -4,15 +4,16 @@
 ![Simulation](./sim_G0.5_T1.0_N10_F1.0_dt0.005.gif)
 
 
-<img src="https://render.githubusercontent.com/render/math?math=\bold{\dot{p}} = -\gamma\bold{p} + \sigma \bold{\dot{w}} ">
+<img src="https://render.githubusercontent.com/render/math?math=\dot{p}} = -\gamma\bold{p} + \sigma \bold{\dot{w}} ">
 
 where:
 <br>
-1. $\gamma\bold{p}$ is the friction force. It simulates the effect of the bath (solvent) on the system.
+
+1. <img src="https://render.githubusercontent.com/render/math?math=\gamma\bold{p}"> is the friction force. It simulates the effect of the bath (solvent) on the system.
 <br>
-2. $\sigma\bold{\dot{w}}$ is the random force, which is represented by the derivate of a Wiener process $\bold{w}$.
+2. <img src="https://render.githubusercontent.com/render/math?math=\sigma\bold{\dot{w}}"> is the random force, which is represented by the derivate of a Wiener process $\bold{w}$.
 <br>
-3. $\sigma = \sqrt{2 \gamma m k_B T}$ governs the strenght of the random force (it is related to the friction coefficient via the fluctuation-dissipation theorem)
+3. <img src="https://render.githubusercontent.com/render/math?math=\sigma = \sqrt{2 \gamma m k_B T}"> governs the strenght of the random force (it is related to the friction coefficient via the fluctuation-dissipation theorem)
 <br>
 $$
 d\bold{p} = -\gamma\bold{p} dt + \sigma d\bold{w}
