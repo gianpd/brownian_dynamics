@@ -8,19 +8,15 @@
 
 where:
 <br>
-
 1. <img src="https://render.githubusercontent.com/render/math?math=\gamma\bold{p}"> is the friction force. It simulates the effect of the bath (solvent) on the system.
 <br>
-2. <img src="https://render.githubusercontent.com/render/math?math=\sigma\bold{\dot{w}}"> is the random force, which is represented by the derivate of a Wiener process $\bold{w}$.
+2. <img src="https://render.githubusercontent.com/render/math?math=\sigma\bold{\dot{w}}"> is the random force, which is represented by the derivate of a Wiener process <img src="https://render.githubusercontent.com/render/math?math=\bold{w}">.
 <br>
 3. <img src="https://render.githubusercontent.com/render/math?math=\sigma = \sqrt{2 \gamma m k_B T}"> governs the strenght of the random force (it is related to the friction coefficient via the fluctuation-dissipation theorem)
 <br>
-$$
-d\bold{p} = -\gamma\bold{p} dt + \sigma d\bold{w}
-$$
+<img src="https://render.githubusercontent.com/render/math?math=d\bold{p} = -\gamma\bold{p} dt + \sigma d\bold{w}">
 
 <br>
 
-$$
-\bold{p\left(t + \delta t\right)} = \exp(-\gamma\delta t) \bold{p\left(t\right)} + \sqrt{1-\exp(-2\gamma\delta t)}\sqrt{m k_B T} \bold{G}
-$$
+<img src="https://render.githubusercontent.com/render/math?math=\bold{p\left(t + \delta t\right)} = \exp(-\gamma\delta t) \bold{p\left(t\right)} + \sqrt{1-\exp(-2\gamma\delta t)}\sqrt{m k_B T} \bold{G}">
+
