@@ -1,12 +1,12 @@
 # Browian Dynamics 
 (BOAP algorithm: *BJ Leimkuhler and C Matthews Appl. Math. Res. eXpress 2013, 34–56 (2013); J. Chem. Phys. 138, 174102 (2013)*)
 
-![Simulation](sim_G0.5_T1.0_N10_F1.0_dt0.005.gif)
+![Simulation](./sim_G0.5_T1.0_N10_F1.0_dt0.005.gif)
 
 
-$$
+```math
 \bold{\dot{p}} = -\gamma\bold{p} + \sigma \bold{\dot{w}} 
-$$
+```
 
 where:
 <br>
