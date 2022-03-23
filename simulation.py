@@ -43,8 +43,6 @@ def main(t, r, p, gamma, box, T, n, nsteps, f=None, periodic=True):
         ps.append(kick_step_propagator(t * 0.5, p, f))
     return rs, ps
 
-    
-
 def update_lines(num, walks, lines):
     for line, walk in zip(lines, walks):
         # NOTE: there is no .set_data() for 3 dim data...
@@ -54,6 +52,9 @@ def update_lines(num, walks, lines):
 
 def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2, periodic=True):
     # Data: simulation of a 3D brownian dynamics of N particles
+    STEP = p*dt + np.sqrt(dt)
+    r_left = r - STEP
+    r_right = r + STEP
     rs, _ = main(dt, r, p, gamma, box, T, n, num_steps, f, periodic=periodic)
     rs = np.asarray(rs).reshape((n, num_steps, 3))
     
@@ -65,13 +66,13 @@ def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2, periodi
     lines = [ax1.plot([], [], [], lw=lw)[0] for _ in rs]
     
     # Setting the axes properties
-    #ax1.set(xlim3d=(0, box), xlabel='X')
-    #ax1.set(ylim3d=(0, box), ylabel='Y')
-    #ax1.set(zlim3d=(0, box), zlabel='Z')
+    ax1.set(xlim3d=(r_left, r_right), xlabel='X')
+    ax1.set(ylim3d=(r_left, r_right), ylabel='Y')
+    ax1.set(zlim3d=(r_left, r_right), zlabel='Z')
     
     # Creating the Animation object
     anim = animation.FuncAnimation(
-        fig, update_lines, num_steps, fargs=(rs, lines), interval=10)
+        fig, update_lines, num_steps, fargs=(rs, lines), interval=100)
     
     writergif = animation.PillowWriter(fps=30)
     f = f if f else 0.0
@@ -82,29 +83,29 @@ def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2, periodi
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Brownian Dynamics MD simulation.')
     parser.add_argument(
-        '--dt', help='time step integration (default value = 0.005)', 
-        required=False, type=float, action='store', default=0.005
+        '--dt', help='time step integration (default value = 7e-4)', 
+        required=False, type=float, action='store', default=7e-4
     )
     parser.add_argument(
         '--IC', required=False, nargs=2, action='store', type=float,
         help='initial position and velocity conditions, default=(0,0)',
-        default=(0.0, 0.0)
+        default=(4.0, 0.25)
     )
     parser.add_argument(
-        '--box_dim', required=False, type=float, action='store', default=3.0,
-        help='Box dimensions (default=3.0)'
+        '--box_dim', required=False, type=float, action='store', default=8.0,
+        help='Box dimensions (default=8.0)'
     )
     parser.add_argument(
         '--num_steps', action='store', required=False, type=int, default=1000,
         help='# of stemps (default value = 1000)'
     )
     parser.add_argument(
-        '--gamma', action='store', required=False, default=0.5, type=float,
-        help='Friction coefficient (defalt value = 0.5)'
+        '--gamma', action='store', required=False, default=0.1, type=float,
+        help='Friction coefficient (defalt value = 0.1)'
     )
     parser.add_argument(
-        '--T', action='store', required=False, default=1.0, type=float,
-        help='Temperature value (defalt value = 1.0)'
+        '--T', action='store', required=False, default=1.25, type=float,
+        help='Temperature value (defalt value = 1.25)'
     )
     parser.add_argument(
         '--N', action='store', required=False, default=1, type=int,
@@ -137,4 +138,4 @@ if __name__ == '__main__':
     lw = args.lw
     F = args.F
 
-    save_gif(fname, dt, r, p, gamma, box, T, N, num_steps, F, lw)
+    save_gif(fname, dt, r, p, gamma, box, T, N, num_steps, f=F, lw=lw)

@@ -1,7 +1,7 @@
 # Browian Dynamics 
 (BOAP algorithm: *BJ Leimkuhler and C Matthews Appl. Math. Res. eXpress 2013, 34–56 (2013); J. Chem. Phys. 138, 174102 (2013)*)
 
-![Simulation](./sim_G0.5_T1.0_N10_F1.0_dt0.005.gif)
+![Simulation](./sim_G1.0_T1.2_N1_F0.0_dt0.0005_box3.0.gif)
 
 <br>
 
@@ -13,7 +13,7 @@ $$ -->
 
 where:
 1. <!-- $\gamma p$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\F0ta9KDBiZ.svg">  is the friction force. It simulates the effect of the bath (solvent) on the system.
-2. <!-- $\sigma \dot{w}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\BtGT0Mblt8.svg"> is the random force, which is represented by the derivate of a Wiener process $\bold{w}$">.
+2. <!-- $\sigma \dot{w}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\BtGT0Mblt8.svg"> is the random force, which is represented by the derivate of a Wiener process <!-- $\vec{w}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\as1xUBQHCN.svg">
 3. <!-- $\sigma =\sqrt{2\gamma m k_B T}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\9qnAURm6Si.svg"> governs the strenght of the random force (it is related to the friction coefficient via the fluctuation-dissipation theorem)
 <!-- $dp=-\gamma p dt +\sigma dw$ --> <img style="transform: translateY(0.1em); background: white;" src="svg\kXz0wb5NL3.svg">
 
