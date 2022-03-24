@@ -34,36 +34,42 @@ def random_step_propagator(t, p, gamma, T, n):
 
 def main(t, r, p, gamma, box, T, n, nsteps, f=None, periodic=True):
     rs, ps = [], []
-    #r = r / box
     for i in range(nsteps):
         p = kick_step_propagator(t * 0.5, p, f)
         r = drift_step_propagator(t * 0.5, r, p, box, periodic=periodic)
         p = random_step_propagator(t, p, gamma, T, n)
         rs.append(drift_step_propagator(t * 0.5, r, p, box, periodic=periodic))
         ps.append(kick_step_propagator(t * 0.5, p, f))
-    return rs, ps
+    return np.asarray(rs), np.asarray(ps)
 
 def update_lines(num, walks, lines):
-    for line, walk in zip(lines, walks):
-        # NOTE: there is no .set_data() for 3 dim data...
-        line.set_data(walk[:num, :2].T)
-        line.set_3d_properties(walk[:num, 2])
+    """
+    CALLED FROM ANIMATION ---
+    It updates the lines containing axes plot with the particles trajectories:
+    walks is a numpy 3D Tensor where dimension is: num particles x num_steps x 3
+    """
+    for i, line in enumerate(lines):
+        x, y, z = walks[:num, i, 0], walks[:num, i, 1], walks[:num, i, 2]
+        #print(x.shape)
+        line.set_data_3d(x, y, z)
+        #line.set_3d_properties()
     return lines
 
-def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2, periodic=True):
+def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=1.5, periodic=True):
     # Data: simulation of a 3D brownian dynamics of N particles
     STEP = p*dt + np.sqrt(dt)
     r_left = r - STEP
     r_right = r + STEP
     rs, _ = main(dt, r, p, gamma, box, T, n, num_steps, f, periodic=periodic)
-    rs = np.asarray(rs).reshape((n, num_steps, 3))
+    #print(f'RS shape: {rs.shape}') -> num_steps x N x 3
+    #rs = rs.reshape((n, num_steps, 3))
     
     # Attaching 3D axis to the figure
-    fig = plt.figure()
+    fig, ax1 = plt.subplots(1, 1)
     ax1 = fig.add_subplot(projection="3d")
     
     # Create lines initially without data
-    lines = [ax1.plot([], [], [], lw=lw)[0] for _ in rs]
+    lines = [ax1.plot([], [], [], lw=lw)[0] for _ in range(n)] # one plot for each particle
     
     # Setting the axes properties
     ax1.set(xlim3d=(r_left, r_right), xlabel='X')
@@ -72,7 +78,7 @@ def save_gif(fname, dt, r, p, gamma, box, T, n, num_steps, f=None, lw=2, periodi
     
     # Creating the Animation object
     anim = animation.FuncAnimation(
-        fig, update_lines, num_steps, fargs=(rs, lines), interval=100)
+        fig, update_lines, frames=num_steps, fargs=(rs, lines), interval=200)
     
     writergif = animation.PillowWriter(fps=30)
     f = f if f else 0.0

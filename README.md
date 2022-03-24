@@ -1,7 +1,7 @@
 # Browian Dynamics 
 (BOAP algorithm: *BJ Leimkuhler and C Matthews Appl. Math. Res. eXpress 2013, 34–56 (2013); J. Chem. Phys. 138, 174102 (2013)*)
 
-![Simulation](./sim_G1.0_T1.2_N1_F0.0_dt0.0005_box3.0.gif)
+![Simulation](./sim_G0.1_T1.25_N100_F0.0_dt0.0007_box8.0.gif)
 
 <br>
 
